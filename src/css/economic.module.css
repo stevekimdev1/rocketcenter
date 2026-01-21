@@ -1,0 +1,14 @@
+.container {
+  width: 670px;
+  height: calc(100vh - 148px);
+  margin: 0 auto;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 300px;
+    height: calc(100vh - 204px);
+  }
+}

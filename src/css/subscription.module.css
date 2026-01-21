@@ -1,0 +1,499 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.selectionArea {
+  display: flex;
+  gap: 4rem;
+  padding: 2rem;
+  background: #f8f9fc;
+  border-radius: 8px;
+}
+
+.stockSelection,
+.periodSelection {
+  flex: 1;
+}
+
+.stockSelection h2,
+.periodSelection h2 {
+  color: var(--main-color);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.stockCheckboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stockCheckbox {
+  font-size: 1.1rem;
+}
+
+.stockCheckbox :global(.ant-checkbox + span) {
+  padding-left: 12px;
+}
+
+.periodSelect {
+  width: 100%;
+  height: 45px;
+}
+
+.menuSubscriptionRoot :global(.ant-select-selector) {
+  height: 45px !important;
+  border-radius: 8px !important;
+  padding: 0 16px !important;
+}
+
+.menuSubscriptionRoot :global(.ant-select-selection-item) {
+  line-height: 43px !important;
+  font-size: 1.1rem !important;
+}
+
+.summaryArea {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: white;
+  border: 1px solid #e4e9f2;
+  border-radius: 8px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.summaryRow:last-child {
+  border-bottom: none;
+}
+
+.summaryRow label {
+  color: #666;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mileageContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mileageBalance {
+  display: inline-block;
+  color: #999;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+
+.mileageBalanceMobile {
+  display: none;
+}
+
+.summaryValue {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--main-color);
+}
+
+.mileageInput {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mileageInput :global(.ant-input-number),
+.mileageInput :global(.ant-input) {
+  width: 150px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.mileageInput :global(.ant-input-number-handler-wrap) {
+  display: none;
+}
+
+.depositArea {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: white;
+  border: 1px solid #e4e9f2;
+  border-radius: 8px;
+}
+
+.depositArea h2 {
+  color: var(--main-color);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.depositInfo {
+  background: #f8f9fc;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  justify-content: space-between;
+}
+
+.infoRow:last-child {
+  margin-bottom: 0;
+}
+
+.infoRow label {
+  width: 120px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.infoValue {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--main-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.selectButton {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  margin-left: 1rem;
+}
+
+.addressWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.address {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--main-color);
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #e4e9f2;
+  flex: 1;
+}
+
+.copyButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+}
+
+.qrWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.depositNotice {
+  color: #ff4d4f;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff1f0;
+  border-radius: 8px;
+}
+
+.depositNoticeDetail {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.subscribeArea {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.subscribeButton {
+  height: 50px;
+  padding: 0 4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: var(--main-color);
+}
+
+.subscribeButton:hover {
+  background-color: #1a1745 !important;
+}
+
+.subscribeButton:disabled {
+  background-color: #d9d9d9 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .selectionArea {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+  .summaryArea {
+    padding: 0.8rem;
+  }
+  .summaryRow {
+    /* flex-direction: column; */
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mileageInput {
+  }
+  .mileageBalance {
+    display: none;
+  }
+  
+  .mileageBalanceMobile {
+    display: inline-block;
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+  .summaryRowMileage {
+    padding-top: 0;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .infoValue {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 1rem;
+  }
+  .infoValue .flex1 {
+    flex: 1;
+  }
+
+  .addressWrapper {
+    flex-direction: column;
+  }
+
+  .copyButton {
+    width: 100%;
+  }
+
+  .qrWrapper {
+    padding: 1rem;
+  }
+
+  .subscribeButton {
+    width: 100%;
+    padding: 0 2rem;
+  }
+
+  .depositArea {
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+  }
+
+  .depositInfo {
+    padding: 1.0rem;
+  }
+  .infoRow {
+    text-align: flex-start;
+    align-items: flex-start;
+  }
+
+  .address {
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  .copyButton {
+    width: auto;
+    min-width: 100px;
+    margin-left: 1rem;
+  }
+}
+
+.successModalTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--main-color);
+}
+
+.successIcon {
+  font-size: 24px;
+  color: #52c41a;
+}
+
+.successModalContent {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.successModalContent p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.highlightText {
+  color: #ff4d4f !important;
+  font-weight: 500;
+}
+
+.successModalButton {
+  width: 120px;
+  height: 45px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Modal 전역 스타일 */
+.menuSubscriptionRoot :global(.ant-modal-content) {
+  padding: 2rem !important;
+}
+
+.menuSubscriptionRoot :global(.ant-modal-header) {
+  margin-bottom: 1.5rem !important;
+  text-align: center;
+}
+
+.menuSubscriptionRoot :global(.ant-modal-title) {
+  font-size: 1.5rem !important;
+}
+
+.menuSubscriptionRoot :global(.ant-modal-footer) {
+  margin-top: 1.5rem !important;
+  text-align: center !important;
+  border-top: none !important;
+}
+
+.tetherIcon {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+/* Add these styles to src/css/subscription.module.css */
+
+.planContainer {
+  margin-bottom: 20px;
+}
+.planGrid {
+  display: flex;
+  justify-content: space-around;
+}
+.planTitle {
+  color: var(--main-color);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.planCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.planCardTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.planCardTitleIcon img {
+  width: 60px;
+}
+.planCardTitleText {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.planCardTitleDescription {
+  font-size: 14px;
+  color: #555;
+  font-weight: 400;
+}
+.planCardPrice1 {
+  font-size: 18px;
+  color: #000;
+  background-color: #e0f7fa;
+  padding: 10px;
+  margin: 0 -20px;
+}
+
+.planCardPrice2 {
+  font-size: 18px;
+  color: #000;
+  padding: 10px;
+}
+.planCardOrgPrice {
+  color: #aaa;
+  text-decoration: line-through;
+}
+.planCardDescription {
+  font-size: 14px;
+  color: #555;
+}
+.planCardDiscount {
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+}

@@ -1,0 +1,207 @@
+.container {
+  width: 100%;
+}
+
+.carousel {
+  height: 700px;
+}
+
+.slide {
+  height: 700px;
+  background: transparent;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.slide1 {
+  background-image: url('/img/home/topbg1.png');
+}
+
+.slide2 {
+  background-image: url('/img/home/topbg2.png');
+}
+
+.slide3 {
+  background-image: url('/img/home/topbg3.png');
+}
+
+.content {
+  width: 40%;
+  margin: 0;
+  text-align: left;
+  color: #2C2770;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #2C2770;
+  text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white; /* 흰색 테두리 효과 */
+}
+
+.subtitle {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2C2770;
+  text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white; /* 흰색 테두리 효과 */
+}
+
+.description {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #2C2770;
+  text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white; /* 흰색 테두리 효과 */
+}
+
+.signupButton {
+  margin-top: 2rem;
+  background-color: var(--main-color);
+  color: white;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.signupButton:hover {
+  background-color: #1a1745;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .content {
+    width: 100%;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .signupButton {
+    align-self: center;
+  }
+}
+
+/* Antd Carousel 커스텀 스타일 */
+.menuHomeRoot :global(.ant-carousel .slick-dots li button) {
+  background: #ffffff50 !important;
+}
+
+.menuHomeRoot :global(.ant-carousel .slick-dots li.slick-active button) {
+  background: #ffffff !important;
+}
+
+.infoSection {
+  padding: 4rem 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.infoContent {
+  padding: 2rem;
+  max-width: 700px;
+}
+
+.infoImage {
+  max-width: 50%;
+}
+
+.infoImage img {
+  width: 500px;
+  height: auto;
+}
+
+.infoTitle {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+  color: #2C2770;
+  margin-bottom: 1rem;
+}
+
+.infoSubtitle {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.5rem;
+  color: var(--main-color);
+  margin-bottom: 1.5rem;
+}
+
+.infoDescription {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* 모바일 반응형 스타일 */
+@media (max-width: 768px) {
+  .infoSection {
+    padding: 2rem;
+  }
+
+  .infoRow {
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+  }
+
+  .infoImage {
+    order: -1; /* 이미지가 항상 앞쪽에 오도록 설정 */
+    width: 100%; /* 이미지의 너비를 100%로 설정 */
+    max-width: 100%;
+    margin-bottom: 1rem; /* 이미지와 텍스트 사이의 간격 조정 */
+  }
+
+  .infoContent {
+    width: 100%; /* 텍스트 내용의 너비를 100%로 설정 */
+    padding: 0;
+  }
+  .infoTitle {
+    margin-bottom: 0;
+  }
+  .infoSubtitle {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .infoDescription {
+    font-size: 1rem;
+  }
+} 

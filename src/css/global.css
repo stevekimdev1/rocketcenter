@@ -1,0 +1,49 @@
+/* CSS 변수 추가 (최상단에 추가) */
+:root {
+  --main-color: #6b8cff;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAFDFF;
+  /* --foreground: #171717; */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --background: #0a0a0a; */
+    --foreground: #FAFDFF;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.root-container {
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.tradingview-widget-copyright {
+  display: none!important;
+}
+#tv-attr-logo {
+  display: none!important;
+}
+
+.timezone-dropdown .ant-select-item-option-content {
+  font-size: 12px!important;
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .root-container {
+    padding: 0 1rem;
+  }
+}

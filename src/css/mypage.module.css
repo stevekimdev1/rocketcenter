@@ -1,0 +1,365 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.content h1 {
+  color: var(--main-color);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  color: var(--main-color);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.infoItem label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.infoItem span {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.seller {
+  background-color: #da9a12;
+  font-size: 1rem!important;
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.2rem;
+  color: #fff!important; 
+}
+
+.copyWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.copyWrapper span {
+  flex: 1;
+  font-size: 16px;
+}
+
+.passwordButton,
+.referralButton {
+  margin-top: 1rem;
+  height: 45px !important;
+  font-size: 1rem;
+  padding: 0 24px !important;
+  border-radius: 8px !important;
+}
+
+.referralInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subscriptionInfo {
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  min-height: auto;
+}
+.subscriptionInfoMobile {
+  display: none;
+}
+
+.paymentTable {
+  width: 100%;
+}
+
+/* 테이블 스타일 커스터마이징 */
+.paymentTable :global(.ant-table) {
+  background: transparent;
+}
+
+.paymentTable :global(.ant-table-thead > tr > th) {
+  background: #f5f7fa;
+  color: var(--main-color);
+  font-weight: 600;
+}
+
+.paymentTable :global(.ant-table-tbody > tr > td) {
+  padding: 16px;
+}
+
+.paymentTable :global(.ant-table-tbody > tr:hover > td) {
+  background: #f5f7fa;
+}
+
+.paymentTable :global(.ant-pagination) {
+  margin: 16px 0;
+}
+
+.paymentTable :global(.ant-pagination-item-active) {
+  border-color: var(--main-color);
+}
+
+.paymentTable :global(.ant-pagination-item-active a) {
+  color: var(--main-color);
+}
+
+.paymentTable :global(.ant-table-empty .ant-table-tbody > tr > td) {
+  padding: 50px 0;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .copyWrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .passwordButton,
+  .referralButton {
+    width: 100%;
+  }
+
+  .subscriptionInfo {
+    display: none;
+  }
+
+  .subscriptionInfoMobile {
+    display: block;
+  }
+
+  /* 카드 컨테이너 스타일 */
+  .subscriptionCard {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* 카드 헤더 (구독 상품, 기간) */
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .cardHeader h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--main-color);
+  }
+
+  .cardHeader span {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  /* 카드 내용 (결제 금액, 만료일) */
+  .cardContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .cardContent div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cardContent label {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 4px;
+  }
+
+  .cardContent span {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+  }
+  .mobileCardRow {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 5px 0;
+  }
+}
+
+.withdrawSection {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f0f0f0;
+  text-align: right;
+}
+
+.copyWrapper button {
+  height: 40px !important;
+  padding: 0 24px !important;
+  border-radius: 8px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copyWrapper button :global(.anticon) {
+  font-size: 14px;
+}
+
+.withdrawSection button {
+  height: 45px !important;
+  padding: 0 24px !important;
+  border-radius: 8px !important;
+  font-size: 1rem;
+}
+
+.menuMyPageRoot :global(.ant-modal-content) button {
+  height: 45px !important;
+  border-radius: 8px !important;
+  font-size: 1rem;
+}
+
+.passwordButton:hover,
+.referralButton:hover,
+.copyWrapper button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+.copyWrapper button {
+  font-size: 14px;
+}
+
+.input {
+  height: 45px !important;
+  border-radius: 8px !important;
+  border: 1px solid #e4e9f2 !important;
+  padding: 8px 11px !important;
+  margin-bottom: 0 !important;
+}
+
+.input:hover {
+  border-color: var(--main-color) !important;
+}
+
+.input:focus,
+.input-focused {
+  border-color: var(--main-color) !important;
+  box-shadow: 0 0 0 2px rgba(44, 39, 112, 0.1) !important;
+}
+
+.input :global(.anticon) {
+  color: var(--main-color) !important;
+  margin-right: 10px !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-content) .ant-btn {
+  height: 45px !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-top: 0.5rem !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-content) .ant-btn-primary {
+  background-color: var(--main-color) !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-content) .ant-btn-primary:hover {
+  background-color: #1a1745 !important;
+}
+
+/* 모달 스타일 */
+.menuMyPageRoot :global(.ant-modal-content) {
+  padding: 2rem !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-header) {
+  margin-bottom: 2rem !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-title) {
+  color: var(--main-color) !important;
+  font-size: 1.5rem !important;
+  text-align: center;
+}
+
+/* Form.Item 스타일 추가 */
+.menuMyPageRoot :global(.ant-form-item) {
+  margin-bottom: 1.5rem !important;
+}
+
+.menuMyPageRoot :global(.ant-form-item-explain-error) {
+  margin-top: 4px !important;
+  font-size: 0.9rem !important;
+  color: #ff4d4f !important;
+}
+
+/* 회원 탈퇴 모달 스타일 */
+.withdrawModalContent {
+  padding: 1rem 0;
+}
+
+.withdrawWarning {
+  color: #ff4d4f;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* 회원 탈퇴 모달의 버튼 스타일 */
+.menuMyPageRoot :global(.ant-modal-content) .ant-btn-dangerous {
+  background-color: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+}
+
+.menuMyPageRoot :global(.ant-modal-content) .ant-btn-dangerous:hover {
+  background-color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+/* 모달 내부 입력폼 스타일은 기존과 동일하게 사용 */
+

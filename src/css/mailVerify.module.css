@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 300px);
+  text-align: center;
+}
+
+.title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.message {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.message.success {
+  color: var(--main-color);
+}
+
+.message.error {
+  color: #ff4d4f;  /* antd의 error 컬러 */
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 30px;
+}
+
+.button:hover {
+  background-color: color-mix(in srgb, var(--main-color) 90%, black);
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: #666;
+}
