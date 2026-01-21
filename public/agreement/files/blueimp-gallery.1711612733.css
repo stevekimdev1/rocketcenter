@@ -1,0 +1,535 @@
+@charset "UTF-8";
+/*
+ * blueimp Gallery CSS 2.11.1
+ * https://github.com/blueimp/Gallery
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+.blueimp-gallery,
+.blueimp-gallery > .slides > .slide > .slide-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Prevent artifacts in Mozilla Firefox: */
+  -moz-backface-visibility: hidden;
+}
+.blueimp-gallery > .slides > .slide > .slide-content {
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 1;
+}
+.blueimp-gallery {
+  position: fixed;
+  z-index: 999999;
+  overflow: hidden;
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  display: none;
+  direction: ltr;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+.blueimp-gallery-carousel {
+  position: relative;
+  z-index: auto;
+  margin: 1em auto;
+  /* Set the carousel width/height ratio to 16/9: */
+  padding-bottom: 56.25%;
+  box-shadow: 0 0 10px #000;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+.blueimp-gallery-display {
+  display: block;
+  opacity: 1;
+}
+.blueimp-gallery > .slides {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.blueimp-gallery-carousel > .slides {
+  position: absolute;
+}
+.blueimp-gallery > .slides > .slide {
+  position: relative;
+  float: left;
+  height: 100%;
+  text-align: center;
+  -webkit-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+     -moz-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+      -ms-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+       -o-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+          transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+.blueimp-gallery,
+.blueimp-gallery > .slides > .slide > .slide-content {
+  -webkit-transition: opacity 0.5s linear;
+     -moz-transition: opacity 0.5s linear;
+      -ms-transition: opacity 0.5s linear;
+       -o-transition: opacity 0.5s linear;
+          transition: opacity 0.5s linear;
+}
+.blueimp-gallery > .slides > .slide-loading {
+  background: url(https://storage.googleapis.com/i.addblock.net/loading.gif) center no-repeat;
+  background-size: 64px 64px;
+}
+.blueimp-gallery > .slides > .slide-loading > .slide-content {
+  opacity: 0;
+}
+.blueimp-gallery > .slides > .slide-error {
+  background: url(https://storage.googleapis.com/i.addblock.net/error.png) center no-repeat;
+}
+.blueimp-gallery > .slides > .slide-error > .slide-content {
+  display: none;
+}
+.blueimp-gallery > .prev,
+.blueimp-gallery > .next {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  width: 44px;
+  height: 44px;
+  margin-top: -23px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 60px;
+  font-weight: 100;
+/*  line-height: 30px;*/
+  color: #8e9095;
+  fill: #8e9095;
+  text-decoration: none;
+  text-shadow: 0 0 2px #000;
+  text-align: center;
+  background: none;
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  border: 0px solid #8e9095;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+  opacity: 1;
+  cursor: pointer;
+  display: none;
+}
+.blueimp-gallery > .next {
+  left: auto;
+  right: 13px;
+}
+.blueimp-gallery > .zoom-in,
+.blueimp-gallery > .zoom-out,
+.blueimp-gallery > .view-original,
+.blueimp-gallery > .close {
+  position: absolute;
+  top: 24px;
+  opacity: 1;
+  display: none;
+}
+.blueimp-gallery > .view-original{top: 22px;}
+.blueimp-gallery > .close {top: 26px;}
+.blueimp-gallery > .title {
+  font-family: "NotoSansCJKkr", 'Noto sans Kr';
+  position: absolute;
+  top: 20px;
+  line-height: 30px;
+  opacity: 1;
+  display: none;
+}
+.blueimp-gallery > .zoom-in svg,
+.blueimp-gallery > .zoom-out svg { width:23px; height: 23px; }
+.blueimp-gallery > .view-original svg { width:27px; height:27px; }
+.blueimp-gallery > .close svg { width: 20px; height: 20px; }
+.blueimp-gallery > .zoom-in svg,
+.blueimp-gallery > .zoom-out svg,
+.blueimp-gallery > .view-original svg,
+.blueimp-gallery > .close svg {
+  text-decoration: none;
+  cursor: pointer;
+  fill: #8e9095;
+}
+.blueimp-gallery .view-original svg:nth-child(1){display: none;}
+.blueimp-gallery .view-original svg:nth-child(2){display: block;}
+.blueimp-gallery .view-original.fullscreen svg:nth-child(1){display: block;}
+.blueimp-gallery .view-original.fullscreen svg:nth-child(2){display: none;}
+
+.blueimp-gallery .gallery-top-button {
+  position: absolute; top: 10px; right: 15px; display: flex; flex-direction: row-reverse;align-items: center;
+  background-color: rgba(47,45,42,0.7);border-radius: 3px;padding: 10px 14px 10px 14px;
+}
+.blueimp-gallery .gallery-top-button > a { margin-right:20px; }
+.blueimp-gallery .gallery-top-button > a:nth-child(1) { margin-right: 0; }
+.blueimp-gallery .gallery-top-button > .zoom-in svg,
+.blueimp-gallery .gallery-top-button > .zoom-out svg { width:23px; height: 23px; }
+.blueimp-gallery .gallery-top-button > .view-original svg { width:27px; height:27px; }
+.blueimp-gallery .gallery-top-button > .close svg { width: 20px; height: 20px; }
+.blueimp-gallery .gallery-top-button > .zoom-in svg,
+.blueimp-gallery .gallery-top-button > .zoom-out svg,
+.blueimp-gallery .gallery-top-button > .view-original svg,
+.blueimp-gallery .gallery-top-button > .close svg {
+  text-decoration: none;
+  cursor: pointer;
+  fill: #abafb2;
+}
+
+.blueimp-gallery > .title { 
+  left: 25px;
+  margin: 0 207px 0 0;
+  font-size: 20px;
+  color: #999;
+/*  text-shadow: 0 0 2px #000;*/
+}
+.blueimp-gallery > .close { right: 24px; }
+.blueimp-gallery > .zoom-in { right: 64px; }
+.blueimp-gallery > .zoom-out { right: 107px; }
+.blueimp-gallery > .view-original { right: 150px; }
+.blueimp-gallery > .slide-index {
+  font-family: "NotoSansCJKkr", 'Noto sans Kr';
+  position: absolute;
+  left: 25px;
+  bottom: 20px;
+  color: #8e9095;
+  font-size: 16px;
+  display: none;
+}
+.blueimp-gallery > .play-pause {
+  position: absolute;
+  right: 21px;
+  bottom: 18px;
+  width: 28px;
+  height: 28px;
+/*  background: url(https://storage.googleapis.com/i.addblock.net/play-pause.png) 0 0 no-repeat;*/
+  cursor: pointer;
+  opacity: 1;
+  display: none;
+  fill: #8e9095;
+}
+.blueimp-gallery > .play-pause > svg {margin: 0 auto;}
+.blueimp-gallery > .play-pause > svg:last-child {display: none;}
+.blueimp-gallery .gallery-like {
+  position: absolute;
+  width: 30px;
+  cursor: pointer;
+  display: none;
+  font-size: 11px;
+  text-align: center;
+}
+.blueimp-gallery .gallery-like > span{display: inline-block; white-space: nowrap; height: 16px; line-height: 16px;}
+.blueimp-gallery .gallery-like > svg {fill: #8e9095; margin: 0 auto;}
+.blueimp-gallery .gallery-like > svg > path:first-child{fill: transparent;}
+.blueimp-gallery .gallery-like.active > svg,
+.blueimp-gallery .gallery-like.active > svg > path:first-child {fill: #ee445f;}
+.blueimp-gallery .gallery-like.big-img,
+.blueimp-gallery .gallery-like.fullscreen {top:auto !important; right: 66px; bottom: 18px; left: auto !important;}
+
+.blueimp-gallery-playing > .play-pause {
+  background-position: -15px 0;
+}
+.blueimp-gallery-playing > .play-pause > svg:last-child {display: block;}
+.blueimp-gallery-playing > .play-pause > svg:first-child {display: none;}
+.blueimp-gallery > .prev:hover,
+.blueimp-gallery > .next:hover,
+.blueimp-gallery > .close:hover,
+.blueimp-gallery > .zoom-in:hover,
+.blueimp-gallery > .zoom-out:hover,
+.blueimp-gallery > .view-original:hover,
+.blueimp-gallery > .play-pause:hover,
+.blueimp-gallery .gallery-top-button > .zoom-in:hover,
+.blueimp-gallery .gallery-top-button > .zoom-out:hover,
+.blueimp-gallery .gallery-top-button > .view-original:hover,
+.blueimp-gallery .gallery-top-button > .close:hover,
+.blueimp-gallery-single > .next {
+  color: #fff;
+  opacity: 1;
+}
+
+.blueimp-gallery .gallery-top-button > .close:hover svg,
+.blueimp-gallery .gallery-top-button > .zoom-in:hover svg,
+.blueimp-gallery .gallery-top-button > .zoom-out:hover svg,
+.blueimp-gallery .gallery-top-button > .view-original:hover svg,
+.blueimp-gallery > .prev:hover,
+.blueimp-gallery > .next:hover,
+.blueimp-gallery > .close:hover svg,
+.blueimp-gallery > .zoom-in:hover svg,
+.blueimp-gallery > .zoom-out:hover svg,
+.blueimp-gallery > .view-original:hover svg,
+.blueimp-gallery > .play-pause:hover,
+.blueimp-gallery > .gallery-like:hover svg {
+  fill: #fff;
+}
+
+.blueimp-gallery-controls .gallery-top-button > .zoom-in,
+.blueimp-gallery-controls .gallery-top-button > .zoom-out,
+.blueimp-gallery-controls .gallery-top-button > .close,
+.blueimp-gallery-controls .gallery-top-button > .view-original,
+.blueimp-gallery-controls > .prev,
+.blueimp-gallery-controls > .next,
+.blueimp-gallery-controls > .close,
+.blueimp-gallery-controls > .title,
+.blueimp-gallery-controls > .zoom-in,
+.blueimp-gallery-controls > .zoom-out,
+.blueimp-gallery-controls > .slide-index,
+.blueimp-gallery-controls > .view-original,
+.blueimp-gallery-controls > .play-pause {
+  z-index: 10;
+  display: block;
+  /* Fix z-index issues (controls behind slide element) on Android: */
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+}
+.blueimp-gallery .gallery-top-button > .zoom-in,
+.blueimp-gallery .gallery-top-button > .zoom-out {
+  -webkit-transform: translateY(2px) translateZ(0);
+     -moz-transform: translateY(2px) translateZ(0);
+      -ms-transform: translateY(2px) translateZ(0);
+       -o-transform: translateY(2px) translateZ(0);
+          transform: translateY(2px) translateZ(0);
+}
+.blueimp-gallery-controls .gallery-like {
+  z-index: 10;
+  display: flex;
+  /* Fix z-index issues (controls behind slide element) on Android: */
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+}
+.blueimp-gallery-single > .prev,
+.blueimp-gallery-left > .prev,
+.blueimp-gallery-right > .next,
+.blueimp-gallery-single > .play-pause {
+  display: none;
+}
+.blueimp-gallery > .slides > .slide > .slide-content,
+.blueimp-gallery > .prev,
+.blueimp-gallery > .next,
+.blueimp-gallery > .close,
+.blueimp-gallery > .zoom-in,
+.blueimp-gallery > .play-pause,
+.blueimp-gallery .gallery-like {
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.blueimp-gallery > .close > svg > polygon { pointer-events: none; }
+
+.video-frame .blueimp-gallery > .slides > .slide > .slide-content {width: 50%;}
+
+/* Replace PNGs with SVGs for capable browsers (excluding IE<9) */
+body:last-child .blueimp-gallery > .slides > .slide-error {
+  background-image: url(https://storage.googleapis.com/i.addblock.net/error.svg);
+}
+body:last-child .video-frame .blueimp-gallery > .play-pause {display: none;}
+body:last-child .blueimp-gallery > .play-pause {
+  width: 28px;
+  height: 28px;
+/*  background-size: 40px 20px;*/
+/*  background-image: url(https://storage.googleapis.com/i.addblock.net/play-pause.svg);*/
+}
+body:last-child .blueimp-gallery-playing > .play-pause {
+  background-position: -20px 0;
+}
+
+/* IE7 fixes */
+*+html .blueimp-gallery > .slides > .slide {
+  min-height: 300px;
+}
+*+html .blueimp-gallery > .slides > .slide > .slide-content {
+  position: relative;
+}
+
+.blueimp-gallery > .indicator {
+  position: absolute;
+  top: auto;
+  right: 15px;
+  bottom: 15px;
+  /*left: 15px;*/
+  left: -999999999px;
+  margin: 0 40px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 10px;
+  display: none;
+}
+.blueimp-gallery > .indicator > li {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin: 6px 3px 0 3px;
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  border: 1px solid transparent;
+  background: #ccc;
+  background: rgba(255, 255, 255, 0.25) center no-repeat;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #000;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.blueimp-gallery > .indicator > li:hover,
+.blueimp-gallery > .indicator > .active {
+  background-color: #fff;
+  border-color: #fff;
+  opacity: 1;
+}
+.blueimp-gallery-controls > .indicator {
+  display: block;
+  /* Fix z-index issues (controls behind slide element) on Android: */
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+}
+.blueimp-gallery-single > .indicator {
+  display: none;
+}
+.blueimp-gallery > .indicator {
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* IE7 fixes */
+*+html .blueimp-gallery > .indicator > li {
+  display: inline;
+}
+
+.blueimp-gallery > .slides > .slide > .video-content > img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  /* Prevent artifacts in Mozilla Firefox: */
+  -moz-backface-visibility: hidden;
+}
+.blueimp-gallery > .slides > .slide > .video-content > video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.blueimp-gallery > .slides > .slide > .video-content > iframe {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.blueimp-gallery > .slides > .slide > .video-playing > iframe {
+  top: 0;
+}
+.blueimp-gallery > .slides > .slide > .video-content > a {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  margin: -64px auto 0;
+  width: 128px;
+  height: 128px;
+  background: url(https://storage.googleapis.com/i.addblock.net/video-play.png) center no-repeat;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.blueimp-gallery > .slides > .slide > .video-content > a:hover {
+  opacity: 1;
+}
+.blueimp-gallery > .slides > .slide > .video-playing > a,
+.blueimp-gallery > .slides > .slide > .video-playing > img {
+  display: none;
+}
+.blueimp-gallery > .slides > .slide > .video-content > video {
+  display: none;
+}
+.blueimp-gallery > .slides > .slide > .video-playing > video {
+  display: block;
+}
+.blueimp-gallery > .slides > .slide > .video-loading > a {
+  background: url(https://storage.googleapis.com/i.addblock.net/loading.gif) center no-repeat;
+  background-size: 64px 64px;
+}
+
+/* Replace PNGs with SVGs for capable browsers (excluding IE<9) */
+body:last-child .blueimp-gallery > .slides > .slide > .video-content:not(.video-loading) > a {
+  background-image: url(https://storage.googleapis.com/i.addblock.net/video-play.svg);
+}
+
+/* IE7 fixes */
+*+html .blueimp-gallery > .slides > .slide > .video-content {
+  height: 100%;
+}
+*+html .blueimp-gallery > .slides > .slide > .video-content > a {
+  left: 50%;
+  margin-left: -64px;
+}
+
+@media only screen and (max-width:1199px) {
+  .blueimp-gallery > .prev,
+  .blueimp-gallery > .next,
+  .blueimp-gallery > .prev > svg,
+  .blueimp-gallery > .next > svg {width: 36px; height: 36px;}
+  .blueimp-gallery .gallery-like{right: 66px; bottom: 18px;}
+  .blueimp-gallery > .play-pause{right: 21px; bottom: 18px;}
+}
+@media only screen and (max-width:768px) {
+  .video-frame .blueimp-gallery > .slides > .slide > .slide-content {width: 100%;}
+}
+@media only screen and (max-width:560px) {
+  .blueimp-gallery > .zoom-in,
+  .blueimp-gallery > .zoom-out,
+  .blueimp-gallery > .view-original,
+  .blueimp-gallery > .close,
+  .blueimp-gallery > .title {top: 18px;}
+  .blueimp-gallery > .close{right: 24px;}
+  .blueimp-gallery > .title{left: 20px;}
+  .gallery-frame .blueimp-gallery > .title { max-width: 74%; word-break: break-all; }
+  .blueimp-gallery > .prev {left: 9px;}
+  .blueimp-gallery > .next {right: 9px;}
+  .blueimp-gallery .gallery-like,
+  .blueimp-gallery .gallery-like.big-img,
+  .blueimp-gallery .gallery-like.fullscreen{width: 22px; height: 22px; right: 55px; bottom: 16px;}
+  .blueimp-gallery .gallery-like svg{width: 22px; height: 22px;}
+  .blueimp-gallery > .play-pause {right: 19px; bottom: 16px;}
+  body:last-child .blueimp-gallery > .play-pause,
+  .blueimp-gallery > .play-pause,
+  .blueimp-gallery > .play-pause > svg{width: 22px; height: 22px;}
+  .blueimp-gallery > .slide-index{left: 20px; bottom: 16px;}
+  .blueimp-gallery .gallery-top-button { top: 10px; right: 10px; }
+}
+@media only screen and (max-width:480px) {
+  .gallery-frame .blueimp-gallery > .title { max-width: 100%; margin-right: 20px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
+  .gallery-frame .blueimp-gallery > .title.long-title {top: 54px;}
+  .gallery-frame .blueimp-gallery > .title.long-title.visible {overflow: visible; display: block;}
+  .gallery-frame .blueimp-gallery > .zoomable.visible ~ .title.long-title{display: none;}
+}
+@media only screen and (max-width:360px) {
+  .gallery-frame .blueimp-gallery > .title { max-width: 60%; }
+}

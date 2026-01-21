@@ -1,0 +1,481 @@
+if(typeof LANG == 'undefined') var LANG = getLanguage();
+
+$(window).load(function(data) {
+	setLanguage(LANG);
+});
+
+$(function() {
+
+	$.uadmin = {
+		loginInit: function() {
+			var loginWrap = $('.login-wrap');
+
+			loginWrap.find('.form-group').each(function() {
+				$(this).removeClass('focus');
+				$(this).find('.error').remove();
+				$(this).find('input.form-control').val('');
+			});
+		},
+		loginKeyFunc: function() {
+			var loginWrap = $('.login-wrap');
+
+			loginModal.find('input.form-control').die().live({
+				focus:   function(e) { $(this).closest('.form-group').addClass('focus').siblings().removeClass('focus'); }, 
+				blur: 	 function(e) { $(this).closest('.form-group').removeClass('focus'); },
+				keydown: function(e) { if(e.keyCode == 13) $('#uadmLogin').click(); },
+				keyup: function(e) {
+					var groupEl = $(this).closest('.form-group'),
+						errorEL = $(this).next().next('.error');
+					if($(this).val().length > 0) errorEL.remove();
+				}
+			});
+		},
+
+		makeAddModalContent: function(sid,type) {
+			var addModal_html = '\
+				<div class="uadmin-wrap">\
+					<p class="uadmin-txt">' + $.lang[LANG]['uadmin.setup.add.' + type + '.description.1'] + '<span class="point">' + SID + '</span>' + $.lang[LANG]['uadmin.setup.add.' + type + '.description.2'] + '</p>\
+					<div class="input-group uadmin-m-3 cl-common-form-wrap">\
+						<div class="cl-common-form-group">\
+							<input type="text" class="add-uadmin-input" id="input-uadmin" name="add_uadmin" required="required" aria-describedby="basic-addon">\
+							<label for="input" id="basic-addon" class="cl-common-control-label add-uadmin-label">' + $.lang[LANG]['uadmin.setup.email'] + '</label>\
+						</div>\
+					</div>\
+					<div class="result"></div>\
+				</div>\
+			';
+
+			return addModal_html;
+		},
+		showAddModal: function(sid,type) {
+			if($('.flat-modal ._admin.add-modal').length > 0) return false;
+
+			var add_title = $.lang[LANG]['uadmin.setup.add.'+type+'.title'].toUpperCase(),
+				add_content = $.uadmin.makeAddModalContent(sid,type);
+
+			var uadminAddModal = $(this).showModalFlat(add_title, add_content, true, true, function(e) {
+
+				var regExp = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+					error_str = '',
+					input_uadmin = uadminAddModal.find('#input-uadmin'),
+					val = input_uadmin.val().trim();
+
+				if(val.length == 0) {
+					error_str = $.lang[LANG]['siteum.regexp.email.input'];
+				} else if(!regExp.test(val)) {
+					error_str = $.lang[LANG]['siteum.regexp.check.email'];
+				} 
+
+				if(error_str.length > 0) {
+					input_uadmin.focus();
+					if(uadminAddModal.find('.mng-error').length > 0) uadminAddModal.find('.mng-error').html(error_str);
+					else uadminAddModal.find('.uadmin-wrap').append('<span class="mng-error">'+error_str+'</span>');
+					return false;
+				} else {
+					uadminAddModal.find('.mng-error').remove();
+					val = val.toLowerCase();
+					input_uadmin.val(val);
+
+					$.ajax({
+						type: 'POST',
+						url: '/uadmin/setup/type/checkum',
+						data: { sid : sid, type : type, val : val, valid_type : VALIDTYPE },
+						dataType: 'json',
+						async: true,
+						success: function(data) {
+							if(typeof data.error != 'undefined' && data.error) {
+								if(data.error == 'none-data') {
+									uadminAddModal.modal('hide');
+									$.uadmin.showJoinModal(sid,type,data.data,val);
+								} else {
+									input_uadmin.focus();
+									if(uadminAddModal.find('.mng-error').length > 0) uadminAddModal.find('.mng-error').text(data.error).addClass('check');
+									else uadminAddModal.find('.uadmin-wrap').append('<span class="mng-error check">'+data.error+'</span>');
+								}
+								return false;
+							}
+							uadminAddModal.modal('hide');
+							$.uadmin.showAddCheckModal(sid,data.data);
+						}
+					});
+				}
+
+				
+			}, 'cancel', $.lang[LANG]['uadmin.setup.btn.send'], '_admin add-modal cl-cmmodal cl-s-btn w560 cl-p130 cl-p0', true, 
+			function(e) { /* console.log('closecallback'); */ },
+			function(e) { /* console.log('showcallback'); */
+				var addModal_id = uadminAddModal.attr('id');
+				$('#'+addModal_id).find('input.add-uadmin-input').focus();
+				$('#'+addModal_id).find('input.add-uadmin-input').die('keydown').live({
+					keydown: function(key) {
+						var regExp = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+							error_str = '',
+							val = $(this).val();
+
+						if(val.length == 0) {
+							error_str = $.lang[LANG]['siteum.regexp.email.input'];
+						} else if(!regExp.test(val)) {
+							error_str = $.lang[LANG]['siteum.regexp.check.email'];
+						} 
+
+						if(error_str.length > 0 ) $('#'+addModal_id).find('.mng-error:not(.check)').html(error_str).removeClass('check');
+						else $('#'+addModal_id).find('.mng-error:not(.check)').remove();
+
+						if(key.keyCode == 8 && $('#'+addModal_id).find('.mng-error.check').length>0)  $('#'+addModal_id).find('.mng-error.check').removeClass('check');
+						if(key.keyCode == 13) $('#'+addModal_id).find('.ok-button-dialog').click();
+					},
+				});
+
+				// $('#'+addModal_id).live('click', function(e) {
+				// 	if( $(e.target).attr('class') == 'modal modal-default fade in') $('#'+addModal_id).modal('hide');
+				// });
+
+			},
+			function(e) { /* console.log('hidecallback'); */ });
+		},
+		showAddCheckModal: function(sid,data) {
+
+			if($('.flat-modal ._admin.add-check-modal').length > 0) return false;
+			var check_title = $.lang[LANG]['uadmin.setup.add.'+data['type']+'.title'].toUpperCase(),
+				check_content = '\
+				<div class="uadmin-wrap">\
+					<p class="uadmin-txt">\
+						<span class="point">' + data['id'] + '</span>' +  $.lang[LANG]['uadmin.setup.add.check.'+data['type']+'.description.1'] + '\
+						<span class="point">' + sid + '</span>' + $.lang[LANG]['uadmin.setup.add.check.'+data['type']+'.description.2'] + '\
+					</p>\
+					<div class="input-group uadmin-m-3">\
+						<span class="input-group-addon" id="basic-addon">' + $.lang[LANG]['uadmin.setup.id'] + '</span>\
+						<input type="text" class="form-control" id="input-uadmin-id" aria-describedby="basic-addon" value="' + data['id'] + '" readonly />\
+					</div>\
+				</div>\
+				';
+
+			var uadminAddCheckModal = $(this).showModalFlat(check_title, check_content, true, true, function() {
+				
+				$.post('/uadmin/setup/type/insert', { sid : sid, val: JSON.stringify(data) }, function(result) {
+					if(typeof result.error != 'undefined' && result.error) {
+						alert(result.error);
+						return false;
+					}
+					uadminAddCheckModal.modal('hide');
+					location.reload();
+				});
+				
+			}, 'cancel', '', '_admin add-check-modal cl-cmmodal cl-s-btn w560 cl-p130 cl-p0');
+		},
+
+		makeJoinConditionsStr: function(sid,data) {
+			var collections_html = '',
+				regexObj = $.parseJSON(data['regex']),
+				c_idx = 3,
+				mt = 'mt-15';
+			$.each(data['collection'], function(field,o) {
+				c_idx++;
+
+				var name = (o['name']) ? o['name'] : $.lang[LANG]['manager.list.info.'+field],
+					regex_ex = ($.inArray(field, ['ex']) > -1 && !$.isEmptyObject(regexObj) && typeof regexObj[field] != 'undefined' && typeof regexObj[field]['ex'] != 'undefined') ? '<span class="mng-textinfo ex">' + regexObj[field]['ex'] + '</span>' : '';
+
+				var add_input = '\
+					<div class="input-group cl-common-form-wrap '+ mt +'">\
+						<div class="cl-common-form-group">\
+							<input type="text" class="form-control add-nonmem-uadmin-input" id="input-uadmin-'+field+'" data-type="'+field+'" aria-describedby="basic-addon'+c_idx+'" required="required" value=""/>\
+							<label for="input" id="basic-addon'+c_idx+'" class="cl-common-control-label add-nonmem-uadmin-label">' + name + '</label>\
+						</div>\
+					</div>\
+					' + regex_ex + '\
+				';
+				collections_html += add_input;
+				mt = (regex_ex != '') ? '' : 'mt-15';
+			});
+
+			return collections_html;
+		},
+		makeJoinModalContent: function(sid,type,join_data,email) {
+			var join_Required = $.uadmin.makeJoinConditionsStr(sid,join_data);
+			var joinModal_html = '\
+				<div class="uadmin-wrap" data-lang="'+LANG+'">\
+					<p class="uadmin-txt">\
+						' + $.lang[LANG]['uadmin.setup.join.'+type+'.description.1'] + '\
+						<span class="uadmin-email point">' + email + '</span>\
+						' + $.lang[LANG]['uadmin.setup.join.'+type+'.description.2'] + '\
+						<span class="point">' + sid + '</span>\
+						' + $.lang[LANG]['uadmin.setup.join.'+type+'.description.3'] + '\
+					</p>\
+					<div class="input-group uadmin-m-3 mt-30 mb-30">\
+						<span class="input-group-addon" id="basic-addon2">' + $.lang[LANG]['uadmin.setup.id'] + '</span>\
+						<input type="text" class="form-control" id="input-uadmin-id" data-type="id" aria-describedby="basic-addon2" value="' + email + '" readonly required="required"/>\
+					</div>\
+					<div class="input-group cl-common-form-wrap hide">\
+						<div class="cl-common-form-group">\
+							<input type="text" class="form-control hide" id="input-uadmin-email" data-type="email" aria-describedby="basic-addon1" value="' + email + '" required="required"/>\
+							<label for="input" id="basic-addon1" class="cl-common-control-label add-nonmem-uadmin-label hide">' + $.lang[LANG]['uadmin.setup.email'] + '</label>\
+						</div>\
+					</div>\
+					<div class="input-group cl-common-form-wrap">\
+						<div class="cl-common-form-group">\
+							<input type="password" class="form-control add-nonmem-uadmin-input" id="input-uadmin-password" data-type="password" aria-describedby="basic-addon3" required="required"/>\
+							<label for="input" id="basic-addon3" class="cl-common-control-label add-nonmem-uadmin-label">' + $.lang[LANG]['uadmin.setup.password'] + '</label>\
+						</div>\
+					</div>\
+					<span class="mng-textinfo ex">' + $.lang[LANG]['uadmin.setup.password.regex.ex'] + '</span>\
+					<div class="input-group cl-common-form-wrap mb-20">\
+						<div class="cl-common-form-group">\
+							<input type="password" class="form-control add-nonmem-uadmin-input" id="input-uadmin-password-check" data-type="password-check" aria-describedby="basic-addon4" required="required"/>\
+							<label for="input" id="basic-addon4" class="cl-common-control-label add-nonmem-uadmin-label">' + $.lang[LANG]['uadmin.setup.password-check'] + '</label>\
+						</div>\
+					</div>\
+					<span class="mng-textinfo mb-0"></span>\
+					' + join_Required + '\
+					<div class="result"></div>\
+				</div>\
+			';
+
+			return joinModal_html;
+		},
+		showJoinModal: function(sid,type,join_data,email) {
+			console.log('showJoinModal');
+			if($('.flat-modal ._admin.join-modal').length > 0) return false;
+			var regExp_obj = $.parseJSON(join_data['regex']);
+			var join_title = $.lang[LANG]['uadmin.setup.add.'+type+'.title'].toUpperCase(),
+				join_content = $.uadmin.makeJoinModalContent(sid,type,join_data,email);
+			var uadminJoinModal = $(this).showModalFlat(join_title, join_content, true, true, function(e) {
+
+				$('._admin.join-modal').find('.input-group').each(function(i) {
+					if($(this).find('.input-group-addon-hide').length > 0) return true;
+					var inputEL = $(this).find('.form-control'),
+						errorEL = $(this).next('.mng-error'),
+						input_type = inputEL.attr('data-type'),
+						val = inputEL.val(),
+						reg_type = (input_type == 'password-checked') ? 'password' : input_type,
+						error_str = '';
+
+					if(reg_type == 'id') return true;
+					if(!val || val.trim().length == 0) error_str = $.lang[LANG]['siteum.regexp.'+ input_type + '.input'];
+					else if(input_type == 'password-check' && $('#input-uadmin-password').val().trim().length > 0 && (val.trim() != $('#input-uadmin-password').val().trim()) ) error_str = $.lang[LANG]['uadmin.setup.password-check.regex'];
+					else if(checkEmojis(val)) error_str = $.lang[LANG]['config.unable.emoji'];
+					else if(typeof regExp_obj[reg_type] != 'undefined' && regExp_obj[reg_type] && 
+							typeof regExp_obj[reg_type]['pattern_j'] != 'undefined' && regExp_obj[reg_type]['pattern_j']) {
+						var reg = new RegExp(regExp_obj[reg_type]['pattern_j']);
+						if(!reg.test(val)) {
+							var reg_error = regExp_obj[reg_type]['error'];
+							error_str = (reg_error) ? reg_error : $.lang[LANG]['uadmin.setup.'+input_type+'.regex'];
+						}
+					}
+
+					if(error_str != '') {
+						if($('._admin.join-modal').find('.mng-error:not(.ex)').length == 0) inputEL.focus();
+						else $('._admin.join-modal').find('.mng-error').first().closest('.input-group').find('input').focus();
+
+						if(errorEL.length > 0) errorEL.html(error_str).removeClass('ex');
+						else $(this).after('<span class="mng-error">' + error_str + '</span>').removeClass('ex');
+					} else {
+						inputEL.parents('.input-group.cl-common-form-wrap').next('.mng-error').remove();
+					}
+				});
+
+				if($('._admin.join-modal').find('.mng-error').length > 0) { return false; }
+				else {
+					uadminJoinModal.find('.mng-error').remove();
+					var join_email = $('._admin.join-modal').find('input#input-uadmin-email').val().trim(),
+						join_id = $('._admin.join-modal').find('input#input-uadmin-id').val().trim(),
+						join_pw = $('._admin.join-modal').find('input#input-uadmin-password').val().trim(),
+						join_data = {
+							'email'	: join_email,
+							'id'	: join_id,
+							'password'	: hex_md5(join_pw),
+						};
+					if($('._admin.join-modal').find('input#input-uadmin-nick').length > 0) join_data['nick'] = $('._admin.join-modal').find('input#input-uadmin-nick').val().trim();
+					if($('._admin.join-modal').find('input#input-uadmin-name').length > 0) join_data['name'] = $('._admin.join-modal').find('input#input-uadmin-name').val().trim();
+					if($('._admin.join-modal').find('input#input-uadmin-tel').length > 0) join_data['tel'] = $('._admin.join-modal').find('input#input-uadmin-tel').val().trim();
+
+					$.ajax({
+						type: 'POST',
+						url: '/uadmin/setup/type/joinmember',
+						data: { sid : sid, val : JSON.stringify(join_data) },
+						dataType: 'json',
+						async: true,
+						success: function(data) {
+							if(typeof data.error != 'undefined' && data.error) {
+								$.each(data.error, function(key,str) {
+									if(uadminJoinModal.find('#input-uadmin-'+key).length >0) {
+										uadminJoinModal.find('#input-uadmin-'+key).focus();
+										uadminJoinModal.find('#input-uadmin-'+key).closest('.input-group').after('<span class="mng-error">' + str + '</span>');
+									} else { alert(str); }
+								});
+								return false;
+							}
+							uadminJoinModal.modal('hide');
+
+							var join_pw_show = join_pw.length / 2,
+								join_pw_str = join_pw.substr(0,join_pw_show);
+							for(var i=join_pw_show; i<join_pw.length; i++) {
+								join_pw_str += '*';
+							}
+
+							var join_result_data = {
+								email : join_email,
+								id : join_id,
+								pw : join_pw_str
+							};
+
+							setTimeout(function(){
+								$.uadmin.showJoinResultModal(sid,type,join_result_data);
+							},500);
+
+						}
+					});
+
+				}
+
+			}, 'cancel', $.lang[LANG]['uadmin.setup.join.btn.send'], 'cl-cmmodal cl-s-btn w560 cl-p130 cl-p0 _admin join-modal', true, 
+			function(e) { /* console.log('closecallback'); */ },
+			function(e) { /* console.log('showcallback'); */
+				var joinModal_id = uadminJoinModal.attr('id');
+				$('#'+joinModal_id).find('input#input-uadmin-password').focus();
+				$('#'+joinModal_id).find('input.add-nonmem-uadmin-input').die('keyup').live({
+					keyup: function(key) {
+						var errorEL = $(this).closest('.input-group').next('.mng-error'),
+							input_type = $(this).attr('data-type'),
+							val = $(this).val(),
+							reg_type = (input_type == 'password-checked') ? 'password' : input_type,
+							error_str = '';
+
+						if(val.length == 0) error_str = $.lang[LANG]['siteum.regexp.'+ input_type + '.input'];
+						else if(input_type == 'password-check' && $('#input-uadmin-password').val().trim().length > 0 && (val.trim() != $('#input-uadmin-password').val().trim()) ) error_str = $.lang[LANG]['uadmin.setup.password-check.regex'];
+						else if(typeof regExp_obj[reg_type] != 'undefined' && regExp_obj[reg_type] && 
+								typeof regExp_obj[reg_type]['pattern_j'] != 'undefined' && regExp_obj[reg_type]['pattern_j']) {
+							var reg = new RegExp(regExp_obj[reg_type]['pattern_j']);
+							if(!reg.test(val)) {
+								var reg_error = regExp_obj[reg_type]['error'];
+								error_str = (reg_error) ? reg_error : $.lang[LANG]['uadmin.setup.'+input_type+'.regex'];
+							}
+						}
+
+						if(error_str.length > 0) {
+							if(errorEL.length > 0) errorEL.html(error_str);
+							else $(this).closest('.input-group').after('<span class="mng-error">' + error_str + '</span>');
+						} else {
+							if(errorEL.length > 0) errorEL.remove();
+							else $(this).closest('.input-group').next('.mng-error').eq(0).remove();
+						}
+						//if(key.keyCode == 13) $('#'+joinModal_id).find('.ok-button-dialog').click();
+					},
+				});
+
+				$('#'+joinModal_id).live('click', function(e) {
+					if( $(e.target).attr('class') == 'modal modal-default fade in') $('#'+joinModal_id).modal('hide');
+				});
+
+			},
+			function(e) { /* console.log('hidecallback'); */ });
+		},
+		showJoinResultModal : function(sid,type,data) {
+			var join_result_title = $.lang[LANG]['uadmin.setup.add.'+type+'.title'].toUpperCase(),
+				join_result_content = '\
+								<div class="uadmin-wrap">\
+									<p class="uadmin-txt">\
+										<span class="uadmin-email point">' + data['email'] + '</span>\
+										' + $.lang[LANG]['uadmin.setup.join.result.'+type+'.description'] + '<br>\
+										<div class="input-group uadmin-m-2">\
+											<span class="input-group-addon" id="basic-addon">' + $.lang[LANG]['uadmin.setup.id'] + '</span>\
+											<input type="text" class="form-control" id="input-uadmin-id" aria-describedby="basic-addon" value="' + data['id'] + '" readonly />\
+										</div>\
+										<div class="input-group">\
+											<span class="input-group-addon" id="basic-addon">' + $.lang[LANG]['uadmin.setup.password'] + '</span>\
+											<input type="text" class="form-control" id="input-uadmin-password" aria-describedby="basic-addon" value="' + data['pw'] + '" readonly />\
+										</div>\
+									</p>\
+								</div>\
+				';
+
+			var uadminJoinResultModal = $(this).showModalFlat(join_result_title, join_result_content, true, true, function() {
+				
+				$.post('/uadmin/setup/type/joinuadmin',{ sid : sid, uadmin_type : type,  val: JSON.stringify(data) }, function(result) {
+					if(typeof result.error != 'undefined' && result.error) {
+						alert(result.error);
+						return false;
+					}
+					uadminJoinResultModal.modal('hide');
+					location.reload();
+				});
+
+			}, 'cancel', $.lang[LANG]['uadmin.setup.join.uadmin.insert.btn'], '_admin join-result-modal cl-cmmodal cl-s-btn w560 cl-p130 cl-p0');
+
+		},
+
+	} /*uadmin end*/
+
+	$('.input-show-uadmin-password,.input-show-uadmin-password-check').die('click').live('click', function() {
+		$(this).toggleClass('active');
+		var checked = $(this).hasClass('active'),
+			this_target = $(this).attr('class').replace(/input-show/,'input').replace(/ active/,'');
+
+		if(checked) $(this).prev('#'+this_target).attr('type','text');
+		else $(this).prev('#'+this_target).attr('type','password');
+	});
+
+
+	$('#uadmLogin').die('click').live('click', function() {
+		var loginWrap = $('._admin .login-wrap'),
+			input_data = {};
+
+		loginWrap.find('.form-group').each(function(i) { 
+			var inputEL = $(this).find('input.form-control'),
+				errorEL = $(this).find('.error'),
+				field 	= inputEL.attr('id').trim().replace(/input-/,''),
+				val		= inputEL.val(),
+				error_str = (val.trim().length == 0) ? $.lang[LANG]['siteum.regexp.'+field+'.input'] : '';
+
+			if(error_str.length > 0 ) {
+				if(loginWrap.find('.error').length == 0) inputEL.focus();
+
+				if(errorEL.length > 0) errorEL.html(error_str);
+				else $(this).append('<span class="error">' + error_str + '</span>');
+			} else {
+				errorEL.remove();
+				if(field == 'id') val = val.toLowerCase();
+				if(field == 'password') val = hex_md5(val);
+				input_data[field] = val;
+			}
+		});
+		
+		if(loginWrap.find('.error').length == 0) {
+			var sid = loginWrap.attr('data-sid');
+			$.post('/_admin/login/in', { sid : sid, data : JSON.stringify(input_data) }, function(data) {
+				if(typeof data.error != 'undefined' && data.error) {
+					$.each(data.error, function(key,str) {
+						if(loginWrap.find('#input-'+key).length > 0 ) {
+							loginWrap.find('#input-'+key).closest('.form-group').append('<span class="error">' + str + '</span>');
+						} else { alert(str,'/'); return false; }
+					});
+					if(loginWrap.find('.error').length > 0) return false;
+				}
+
+				if(typeof data.ss_url != "undefined" && data.ss_url) {
+					$.each(data.ss_url, function(i,url) {
+						$('body').append('<img class="auth-img" src="' + url + '">');
+					});
+				}
+
+				setTimeout(function() {
+					$.uadmin.loginInit();
+
+					if(data.member.check_login && (data.member.check_adm || data.member.check_uadm)) {
+						var	host_url = (SERVICE.indexOf('gabia') > -1) ? '//creatorlink-gabia.com' : '//creatorlink.net',
+							replace_url = (data.member.check_adm || data.member.check_easylogin) ? host_url + '/dashboard' : '/_admin/dashboard';
+
+						location.replace(replace_url);
+
+					} else {
+						location.replace('/');
+					}
+				}, 1300);
+
+			},'json');
+
+		}
+
+	});
+
+
+});

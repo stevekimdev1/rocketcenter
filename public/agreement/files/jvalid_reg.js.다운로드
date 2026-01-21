@@ -1,0 +1,61 @@
+if (typeof(VALID_REG_JS) == 'undefined') {
+	if (typeof rt_path == 'undefined')
+        alert('rt_path 변수가 선언되지 않았습니다.');
+
+    var VALID_REG_JS = true;
+
+	var sid_enabled = '';
+	var mb_email_enabled = '';
+	var available = $.lang[LANG]['error.check.free'];
+	$(document).ready(function() {
+		$('#reg_mb_email').focusout(function() {
+			var $this = $(this);
+			if(join==true && !$(this).hasClass('valid')) {
+				$this.parents('li').addClass('spinner');
+				$this.prop('readonly', true);
+				
+				$.ajax({
+					type: 'post',
+					async : true,
+					url: rt_path + '/check/register/email',
+					data: {'reg_mb_email':$(this).val()},
+					success: function(response){
+						$('#msg_mb_email').html(response);
+						mb_email_enabled = $('#reg_mb_email').val();
+						$('#reg_mb_email').valid();
+						$this.parents('li').removeClass('spinner');
+						$this.prop('readonly', false);
+					},
+					error: function(req, status, err){
+						$this.parents('li').removeClass('spinner');
+						$this.prop('readonly', false);
+					}
+				});
+			}
+		});
+
+		$('#reg_mb_email').keyup(function(){
+			$(this).removeClass('valid');
+			$('#msg_mb_email').html('');
+		});
+
+		$('#reg_sid').focusout(function() {
+			$('#msg_sid').load(
+				rt_path + '/check/register/url',
+				{'sid':$('#reg_sid').val()},
+				function(req) {
+					sid_enabled = $('#reg_sid').val();
+					$('#reg_sid').valid();
+				}
+			);
+		});
+
+		$.validator.addMethod("reg_sid", function(value, element) {
+			return this.optional(element) || (($('#msg_sid').text() == available && sid_enabled == value) || $("input[name='w']").val() == 'u');
+		}, "URL 중복확인 결과가 올바르지 않습니다");		
+
+		$.validator.addMethod("reg_mb_email", function(value, element) {
+			return this.optional(element) || (($('#msg_mb_email').text() == available && mb_email_enabled == value) || ($("input[name='w']").val() == 'u' && $("input[name='mb_email']").prop('defaultValue') == $("input[name='mb_email']").val()));;
+		}, "이메일 중복확인 결과가 올바르지 않습니다");
+	});
+}
